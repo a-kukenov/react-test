@@ -1,0 +1,29 @@
+.container {
+	width: 100%;
+}
+ol {
+	width: 100%;
+}
+li {
+	background-color: rgb(48, 48, 48);
+	width: 100%;
+	margin-bottom: 15px;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+	font-size: 25px;
+}
+.li1 {
+	background-color: rgb(171, 53, 49);
+	color: rgb(91, 22, 21);
+}
+.li2 {
+	background-color: rgb(49, 100, 171);
+	color: rgb(21, 68, 91);
+}
+.li3 {
+	background-color: rgb(55, 171, 49);
+	color: rgb(33, 91, 21);
+}
