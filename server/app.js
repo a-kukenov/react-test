@@ -7,12 +7,12 @@ const UserModel = require('./models/UserModel')
 
 require('dotenv').config()
 
-const port = process.env.PORT || 3002
+const port = process.env.PORT || 5173
 const app = express()
 
 app.use(
 	cors({
-		origin: ['http://127.0.0.1:5500'],
+		origin: ['http://localhost:5173'],
 		methods: 'GET, PATCH, POST, DELETE'
 	})
 )
