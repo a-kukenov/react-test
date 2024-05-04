@@ -34,8 +34,8 @@ app.get('/getUsers', async (req, res) => {
 // добавление нового пользователя в БД
 app.post('/addUser', async (req, res) => {
 	try {
-		const { id, name, gender, email } = req.body
-		const user = { id, name, gender, email }
+		const { id, name, gender, email, img } = req.body
+		const user = { id, name, gender, email, img }
 		await UserModel.create(user)
 		res.send({ message: 'Пользователь успешно добавлен в БД' })
 	} catch (err) {
@@ -50,7 +50,7 @@ app.post('/addUser', async (req, res) => {
 app.delete('/deleteUser/:id', async (req, res) => {
 	try {
 		const { id } = req.params
-		await UserModel.findOneAndDelete({ id: `"${id}"` })
+		await UserModel.findByIdAndDelete(id)
 		res.send({ message: 'Пользователь успешно удален из БД' })
 	} catch (err) {
 		console.error('Произошла ошибка при удалении пользователя', err)
