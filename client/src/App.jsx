@@ -6,45 +6,19 @@ import List from './components/List/List'
 import getData from './utils/getData'
 
 function App() {
-	const [l1, setL1] = useState([
-		'элемент списка',
-		'элемент списка',
-		'элемент списка',
-		'элемент списка',
-		'элемент списка',
-		'элемент списка',
-		'элемент списка',
-		'элемент списка',
-		'элемент списка'
-	])
-	const [l2, setL2] = useState([
-		// 'элемент списка1',
-		// 'элемент списка2',
-		// 'элемент списка3',
-		// 'элемент списка4',
-		// 'элемент списка5',
-		// 'элемент списка6',
-		// 'элемент списка7',
-		// 'элемент списка8',
-		// 'элемент списка9',
-		// 'элемент списка10',
-		// 'элемент списка11',
-		// 'элемент списка12',
-		// 'элемент списка13',
-		// 'элемент списка14'
-	])
-	const [l3, setL3] = useState([])
-	const [l4, setL4] = useState(['fff', 'asds'])
+	const [l1, setL1] = useState([])
 
 	const resetLists = () => {
 		setL1([])
-		setL2([])
 	}
 
 	const getDataFromDB = async () => {
 		try {
-			const data = await getData('https://jsonplaceholder.typicode.com/posts')
-			setL2(data.map(el => el.title))
+			const usersObj = await getData(
+				'https://react-test-w1c1.onrender.com/getUsers'
+			)
+			const data = usersObj.users
+			setL1(data.map(el => el.name))
 		} catch (err) {
 			console.error(err)
 		}
@@ -52,7 +26,7 @@ function App() {
 
 	const addNewItem = () => {
 		let item = prompt('Введите название')
-		setL4([...l4, item])
+		setL1([...l1, item])
 	}
 
 	return (
@@ -60,15 +34,6 @@ function App() {
 			<h1>Hello World</h1>
 			<div className={styles['list-container']}>
 				<List title='Список #1' bgColor='red' listItems={l1} />
-				<List
-					title='Список #2'
-					bgColor='orange'
-					listItems={l2}
-					l2={l2}
-					setL2={setL2}
-				/>
-				<List title='Список #3' bgColor='aqua' listItems={l3} />
-				<List title='Список #4' bgColor='lime' listItems={l4} />
 			</div>
 			<div className={cn(styles['button-container'])}>
 				<Button onClick={resetLists} title='Очистить #1 и #2' />
