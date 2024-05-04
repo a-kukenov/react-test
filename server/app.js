@@ -50,7 +50,7 @@ app.post('/addUser', async (req, res) => {
 app.delete('/deleteUser/:id', async (req, res) => {
 	try {
 		const { id } = req.params
-		await UserModel.findByIdAndDelete(id)
+		await UserModel.findOneAndDelete({ id: `"${id}"` })
 		res.send({ message: 'Пользователь успешно удален из БД' })
 	} catch (err) {
 		console.error('Произошла ошибка при удалении пользователя', err)

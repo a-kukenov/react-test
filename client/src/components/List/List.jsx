@@ -3,10 +3,20 @@ import cn from 'classnames'
 import styles from './List.module.css'
 // import uuid
 import { v4 as uuid } from 'uuid'
+import deleteData from '../../utils/deleteData'
 
 const List = ({ listItems, l1, setL1 }) => {
-	const deleteElement = index => {
+	const deleteElement = async (elem, index) => {
 		setL1(l1.filter((el, i) => i != index))
+		try {
+			let id = elem.id
+			let info = await deleteData(
+				`https://react-test-w1c1.onrender.com/deleteUser/${id}`
+			)
+			console.log(info)
+		} catch (err) {
+			console.error('Произошла ошибка при удалении пользователя', err)
+		}
 	}
 
 	return (
