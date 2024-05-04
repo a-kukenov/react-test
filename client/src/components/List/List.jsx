@@ -4,29 +4,34 @@ import styles from './List.module.css'
 // import uuid
 import { v4 as uuid } from 'uuid'
 
-const List = ({ title, bgColor, listItems, l2, setL2 }) => {
+const List = ({ listItems, l1, setL1 }) => {
 	const deleteElement = index => {
-		setL2(l2.filter((el, i) => i != index))
+		setL1(l1.filter((el, i) => i != index))
 	}
 
 	return (
-		<div className={cn(styles['container'], styles[bgColor])}>
-			<h2>{title}</h2>
-			<ul>
-				{listItems.map((el, index) => {
-					return (
-						<li
-							className={cn(styles['item'])}
-							onClick={() => {
-								deleteElement(index)
-							}}
-							key={uuid()}
-						>
-							{el}
-						</li>
-					)
-				})}
-			</ul>
+		<div className={cn(styles['container'])}>
+			{listItems.map((el, index) => {
+				return (
+					<div
+						className={cn(styles['slot'])}
+						onClick={() => {
+							deleteElement(index)
+						}}
+						key={uuid()}
+					>
+						<div className={cn(styles['l-box'])}>
+							<div className={cn(styles['pic'])}></div>
+						</div>
+						<div className={cn(styles['r-box'])}>
+							<div className={cn(styles['id'])}>ID: {el.id}</div>
+							<div className={cn(styles['name'])}>{el.name}</div>
+							<div className={cn(styles['gender'])}>{el.gender}</div>
+							<div className={cn(styles['email'])}>{el.email}</div>
+						</div>
+					</div>
+				)
+			})}
 		</div>
 	)
 }

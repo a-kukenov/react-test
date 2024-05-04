@@ -4,13 +4,10 @@ import styles from './App.module.css'
 import Button from './components/Button/Button'
 import List from './components/List/List'
 import getData from './utils/getData'
+import postData from './utils/postData'
 
 function App() {
 	const [l1, setL1] = useState([])
-
-	const resetLists = () => {
-		setL1([])
-	}
 
 	const getDataFromDB = async () => {
 		try {
@@ -18,27 +15,43 @@ function App() {
 				'https://react-test-w1c1.onrender.com/getUsers'
 			)
 			const data = usersObj.users
-			setL1(data.map(el => el.name))
+			setL1(
+				data.map(elem => {
+					return elem
+				})
+			)
 		} catch (err) {
 			console.error(err)
 		}
 	}
 
-	const addNewItem = () => {
-		let item = prompt('Введите название')
-		setL1([...l1, item])
+	const addNewItem = async () => {
+		let name = prompt('Введите имя')
+		let gender = prompt('Введите пол')
+		let email = prompt('Введите эл.почту')
+		let id = l1.length + 1
+		let user = {
+			id: id,
+			name: name,
+			gender: gender,
+			email: email
+		}
+		let info = await postData(
+			'https://react-test-w1c1.onrender.com/addUser',
+			user
+		)
+		console.log(info)
+		user = setL1([...l1, user])
 	}
-
+	console.log(l1)
 	return (
 		<div className={styles['container']}>
-			<h1>Hello World</h1>
 			<div className={styles['list-container']}>
-				<List title='Список #1' bgColor='red' listItems={l1} />
+				<List listItems={l1} l1={l1} setL1={setL1} />
 			</div>
 			<div className={cn(styles['button-container'])}>
-				<Button onClick={resetLists} title='Очистить #1 и #2' />
-				<Button onClick={getDataFromDB} title='Получить данные для #3' />
-				<Button onClick={addNewItem} title='Добавить новый элемент в #4' />
+				<Button onClick={getDataFromDB} title='Получить данные' />
+				<Button onClick={addNewItem} title='Добавить новый элемент' />
 			</div>
 		</div>
 	)

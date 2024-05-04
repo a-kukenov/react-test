@@ -34,14 +34,14 @@ app.get('/getUsers', async (req, res) => {
 // добавление нового пользователя в БД
 app.post('/addUser', async (req, res) => {
 	try {
-		const { name, password, email } = req.body
-		const user = { name, password, email }
+		const { id, name, gender, email } = req.body
+		const user = { id, name, gender, email }
 		await UserModel.create(user)
 		res.send({ message: 'Пользователь успешно добавлен в БД' })
 	} catch (err) {
 		console.error('Произошла ошибка при добавлении нового пользователя', err)
 		res.send({
-			error: `Произошла ошибка при добавлении нового пользователя ${err}`
+			error: `Произошла ошибка при добавлении нового пользователя ${err}, ${user.id}`
 		})
 	}
 })
@@ -56,30 +56,6 @@ app.delete('/deleteUser/:id', async (req, res) => {
 		console.error('Произошла ошибка при удалении пользователя', err)
 		res.send({
 			error: `Произошла ошибка при удалении пользователя ${err}`
-		})
-	}
-})
-
-// редактирование пользователя в БД
-app.patch('/editUser/:name', async (req, res) => {
-	try {
-		const { name } = req.params
-		const { newName, newPassword, newEmail } = req.body
-
-		const user = await UserModel.findOne({ name })
-		if (user) {
-			user.name = newName
-			user.password = newPassword
-			user.email = newEmail
-		}
-		const info = await user.save()
-		if (info) {
-			res.send({ message: 'Пользователь успешно отредактирован в БД' })
-		}
-	} catch (err) {
-		console.error('Произошла ошибка при редактировании пользователя', err)
-		res.send({
-			error: `Произошла ошибка при редактировании пользователя ${err}`
 		})
 	}
 })
